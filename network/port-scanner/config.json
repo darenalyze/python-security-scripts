@@ -1,0 +1,8 @@
+{
+  "target_ip": "auto",
+  "start_port": 1,
+  "end_port": 65535,
+  "timeout": 0.1,
+  "max_threads": 1000,
+  "output_file": "scan_results.txt"
+}

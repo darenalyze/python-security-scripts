@@ -6,10 +6,38 @@ A multi-threaded Python tool designed to scan network ports and detect active se
 
 ## Features
 
-* **High-Speed Scanning:** Probes ports 1 through 65,535 in ~6 seconds using concurrent execution via `ThreadPoolExecutor`.
+* **JSON Configuration:** Customize target IP, port ranges, timeouts, and thread counts via `config.json` without modifying code.
+* **Auto IP Detection:** Automatically resolves local IP when `"target_ip"` is set to `"auto"`.
+* **High-Speed Scanning:** Probes ports concurrently using `ThreadPoolExecutor`.
 * **WSA Error Mapping:** Decodes Windows socket return codes to accurately determine port status.
-* **Thread-Safe Logging:** Utilizes `threading.Lock()` to prevent log corruption when multiple threads write simultaneously.
-* **Automated File Output:** Automatically exports scan summaries to `scan_results.txt`.
+* **Thread-Safe Logging:** Utilizes `threading.Lock()` to prevent log corruption when recording scan results.
+* **Automated File Output:** Automatically exports scan summaries to your specified output file.
+
+---
+
+## Configuration (`config.json`)
+
+Customize your scan settings in `config.json`:
+
+```json
+{
+  "target_ip": "auto",
+  "start_port": 1,
+  "end_port": 65535,
+  "timeout": 0.1,
+  "max_threads": 1000,
+  "output_file": "scan_results.txt"
+}
+```
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `target_ip` | String | Target IP address or `"auto"` for local host IP. |
+| `start_port` | Integer | Starting port number (e.g., `1`). |
+| `end_port` | Integer | Ending port number (e.g., `65535`). |
+| `timeout` | Float | Connection timeout per port in seconds. |
+| `max_threads` | Integer | Maximum parallel threads for concurrent scanning. |
+| `output_file` | String | Name of the text file where results are saved. |
 
 ---
 
@@ -45,7 +73,8 @@ pip install -r requirements.txt
 ```
 
 ### 3. Run the Tool
-Navigate to the directory and launch the script:
+1. Adjust settings in `config.json` as needed.
+2. Launch the script:
 
 ```bash
 cd network/port-scanner
@@ -55,6 +84,11 @@ python main.py
 ---
 
 ## Changelog
+
+### [v1.2.0] - 2026-08-06
+* **Added:** `config.json` support for dynamic scan settings (IP, ports, threads, timeout, output file).
+* **Added:** Automatic local IP resolution when `"target_ip"` is set to `"auto"`.
+* **Added:** Console print feedback during scan startup and completion.
 
 ### [v1.1.0] - 2026-06-11
 * **Added:** Migrated execution model to `ThreadPoolExecutor` for concurrent scanning.
