@@ -1,2 +1,0 @@
-Open Ports: []
-Closed Ports: []
